@@ -5,7 +5,7 @@ The Following Diagram Shows the Architecture of an RFID Embedded System,
 
 ![](https://www.elprocus.com/wp-content/uploads/2015/10/Automatic-Door-Lock-System-Circuit-Diagram.jpg)
 
-![](https://hackster.imgix.net/uploads/attachments/209087/Bread-Board.jpg)
+![](https://www.engineersgarage.com/wp-content/uploads/2022/01/P26-02-scaled.jpg)
 # Block Diagram of RFID Based Door Lock System
 The RFID door lock system consists of different blocks and they are,
   * Micro-Controller
@@ -16,9 +16,9 @@ The RFID door lock system consists of different blocks and they are,
   * Buzzer
 
 The following diagram shows the RFID based Embedded System,
+![](https://sites.google.com/site/handymaneric2/_/rsrc/1472781627176/electronics/rfiddoorlocks/RFIDdoorlocksimple-1.jpg)
 
-![](https://d3i71xaburhd42.cloudfront.net/5f0ea8eec74bf57349d19977392e78b1e0fce220/1-Figure1-1.png)
-
+![](https://i.pinimg.com/736x/a4/e2/6e/a4e26e21d2982728835de5c3a5157376.jpg)
 ## Proposed System
 The Following shows the proposed system for RFID Door Lock System,
 
