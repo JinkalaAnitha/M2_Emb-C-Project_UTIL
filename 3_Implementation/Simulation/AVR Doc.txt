@@ -1,0 +1,444 @@
+* Anatomy of a C program for AVR
+
+The following presents a rough overview and breakdown of a demo program from the avrlib-demos. The code is in the avrlib-demos in the button directory in the file button.c. Details of C syntax and AVR-specific commands will follow.
+
+The first portion of a C program is usually a bunch of comments that describe the file. Usually this includes the name, author, and date of the file; a revision history; and directions on how to use the file.
+      //---------------------------------------------------
+      //---------------------------------------------------
+      //
+      //  AVRLIB-DEMO
+      //  For avrlib and avrmini development board.
+      //
+      //
+      //  File:     button.c
+      //  Author:   Wendy Ju
+      //            based on code written by Michael Gurevich & Matt Wright
+      //
+      // Revision History:
+      // When           Who               Description of change
+      // -----------  -----------         -----------------------
+      // 04-Oct-2004  Wendy Ju            Created a new instance
+      // 01-Jun-2006  Michael Gurevich    makefile->mega32, superfluous #includes
+      //
+      //---------------------------------------------------
+      //  USING THE AVRMINI DEVELOPMENT BOARD, CONNECT
+      //  THE LED/PUSHBUTTON JUMPER TO THE PORT B JUMPER.
+      //---------------------------------------------------
+      //
+      //---------------------------------------------------
+      //  This program will cause LED 0 to light when corresponding
+      //  pushbutton 4 is pressed.
+      //---------------------------------------------------
+Next are #includes. They tell the compiler where to look for other bits of code you are using that do not reside in this file. They are normally ".h" or header files that contain macros and function prototypes. Before a the .c file is compiled, the contents of the #includes are literally copied into the file.
+      
+      // compiler includes
+      #include <avr/io.h>
+
+      // avrlib includes
+      #include "global.h"
+
+#defines are "macros". Before the program is compiled, the argument of the #define is simply substituted everywhere the name is used. They are handy for giving meaningful names to numbers and for changing a single value that may be used numerous times in a program without having to change every instance.
+      
+      #define DELAY 1000
+
+Function prototypes give the name, arguments and return type of functions that will be used later in the program. They can be included in header files or in the .c file before the function is defined.
+      
+      int checkButton(int whichButton);
+      void setLED(int whichLED, int on);
+
+The main function is literally the main part of the code. There can only be one main function in the final compiled program. The code inside the main function is executed sequentially, one line at a time.
+      
+        int main(void) {
+
+        // set LED pins as outputs,  button pins as inputs
+        outb(DDRB, 0x0F);
+
+        // Turn off LEDs - looking at the circuit
+        // you can see that they are off when pulled high
+        outb(PORTB, 0xFF);
+
+        while(1) {  // loop forever
+          setLED(0, checkButton(4));
+          //sampling delay goes here
+        }
+
+        return 0;
+      }
+
+Finally, there are function definitions. These are pieces of code that are called from the main function or from other functions, that have a specific functionality that may want to be used over and over.
+      int checkButton(whichButton) {
+        // On our boards the four buttons are numbered 4, 5, 6, and 7
+
+        return (! bit_is_set(PINB,whichButton));
+        /* Logical negation is because when the button is pushed, the pin
+           is drawn to ground, so the button is "on" when the bit is zero. */
+      }
+
+      void setLED(int whichLED, int on) {
+        // On our board the four buttons are numbered 0, 1, 2, and 3
+
+        if (on) {
+          //light the LED
+          cbi(PORTB,whichLED);
+        } else {
+          //turn off the LED
+          sbi(PORTB,whichLED);
+        }
+      }
+* C Syntax
+
+This is a very basic overview of the essential parts of the C language that are frequently encountered when writing simple programs for the AVR. It is obviously impossible to thoroughly cover the C language in a few pages, but this should provide a brief explanation of most things that will be encountered in demo programs. If you know C, you can skip this section. For a better reference, see Kernighan, B.W. and D. M. Richie (1988) The C Programming Language. Prentice Hall.
+
+Comments":
+
+Comments are not evaluated by the compiler. They are there to help the programmer. There are two styles of comments that can be used:
+      // This is a C++-style 'slash-slash comment' 
+
+      /* This is a C-style comment*/
+      /* These comments must be terminated with a star-slash */
+
+Variables:
+
+Declaring a variable means allocating a chunk of RAM on the AVR and giving it a name. After a variable is declared, the chunk of memory can be assigned a value, and that value can be recalled, using its name. A variable declaration looks like this:
+      u08 myvar;   // unsigned 8-bit integer named myvar
+     where u08 is the type and myvar<tt> is the name. Notice the statement ends with a semicolon, like all C statements. A variable must be declared before it is used, and before any executable statements in the function in which it is declared. Integer types are:
+      u08 a;	// unsigned 8-bit integer (0 to 255) or 0 to MAX_U08
+      s08 b;	// signed 8-bit integer (-128 to 127) or MIN_S08 to MAX_S08
+      u16 c;	// unsigned 16-bit integer (0 to 65535) or 0 to MAX_U16
+      s16 d;	// signed 16-bit integer (-32768 to 32767) or MIN_S16 to MAX_S16
+      u32 e;	// unsigned 32-bit integer (0 to 4294967295) or 0 to MAX_U32
+      s32 f;	// signed 32-bit integer (-2147483648 to 2147483647) or MIN_S32 to MAX_S32
+<tt>MAX_U08, etc. are macros that are #defined in the AVRLib.
+
+An assignment gives a value to a variable, using the assignment operator = :
+      u08 foo, bar;   // define 2 unsigned 8-bit integers
+      foo = 12;       // assign the value 12 to the variable foo
+      bar = foo * 10; // assign the 10 times the value of foo to the variable bar
+
+Arrays:
+
+Arrays are adjacent chunks of memory of the same size that allow convenient indexing. They are defined as follows.
+      u08 myarray[5];  // define an array of 5 unsigned 8-bit integers
+      u08 myarray2[3] = {10, 12, 18};  // decfine an array of 3 unsigned 8-bit integers 
+                                       // and initialize their values to 10, 12 and 18
+
+      Arrays can be accessed for assignment or use in expressions with square brackets as well. Note that array indices begin at 0:
+
+      myarray2[0] = 11;  // assign the value 11 to the first element of the array myarray2	
+      myarray2[1] = myarray[0]; // assign the value of the first element of myarray 
+                                // to the second element of myarray2
+
+Conditionals:
+
+The basic conditional statement is the if ... else statement. It looks like this:
+      if (a == 2) {          // if a is equal to 2
+           foo++;            // increment the variable foo
+           bar = foo + 10;   // assign the value of foo plus 10 to bar
+      } 
+      else {                 // otherwise (a is not equal to 2)
+           foo--;            // decrement foo
+           bar = foo - 10;   // assign the value of foo minus 10 to bar
+      }
+Note the increment and decrement operators, ++ and -. The keyword if is followed by an expression in parentheses that evaluates to a number. If the expression evaluates to a number other than zero, then the statements in braces immediately following are evaluated. If the expression evaluates to 0, anything following the else in braces will be evaluated. If there are no braces, then only the next line will be evaluated. An if does not need to be followed by else: you may only want something to be done in one case of the condition, and not in others.
+
+The conditional expression normally has a relational operator. The relational operators take two arguments and evaluate to 1 if the relation is true and 0 if it is false. The operators are:
+
+     ==     equality
+     !=     inequality
+     <      less than
+     >      greater than
+     <=     less than or equal to
+     >=     greater than or equal to
+Note the difference between the equality operator == and the assignment operator =. This is one of the most common sources of bugs in C programming.
+
+
+Looping:
+
+There are 2 looping structures in C: while and for loops.
+
+while Loops
+A while loop is a block of code that is executed repeatedly until some condition is met. Its structure is:
+
+     while(expression) {
+          statements
+     }
+
+As with an if statement, the expression in parentheses is evaluated first. If it evaluates to non-zero, the statements in the body of the loop are executed. At the end of the loop body, the expression is evaluated again, and the body is executed until the expression evaluates to 0. The expression is normally relational, depending on some value that is being updated in the loop.
+
+     u08 button;
+     while (button != 1) {         // while the value of button is not equal to 1
+          button = checkButton(3); // call the function checkButton with 
+                                   // argument 3, and assign its value to 
+                                   // the variable button
+     }
+This loop will execute until the function checkButton(3) returns a 1. This type of structure is common for polling an input.
+
+A common exception to using relational operators is the expression
+     while (1) {  // loop forever
+          ...
+          ...
+     }
+This never-ending loop is found in almost all of our AVR programs, because we have some functionality that we want to repeat continuously.
+
+for Loops
+A for loop is normally used when you want to perform an action a specific number of times. Its structure is:
+     for (initialization; condition; update) {
+           statements
+     }
+where initialization, condition, and update are expressions. Normally, the initialization and update are assignments or function calls, and the condition is a relational expression. A typical for loop might look like this:
+
+     for (i=0; i<4; i++) {   // for i from 0 to 3
+          checkButtons(i);   // call function checkButtons with argument i
+     }
+Here, the initialization sets the value of the variable i, the loop counter, to 0. This statement is executed only once, before the loop is entered. The condition is normally a relational expression. If it evaluates to non-zero, the body of the loop is evaluated. At the end of the loop body, the update expression is evaluated, before the condition is evaluated again, to determine whether the loop body should be executed again. Normally, the condition will be violated after the update has been evaluated a certain amount of times. The structure in the example above is most common.
+
+Notice that
+     for (initialization; condition; update) {
+          statements
+     }
+is equivalent to
+
+     initialization;
+     while(condition) {
+          statements
+          update
+     }
+
+Functions:
+
+A function is defined as:
+     returntype FunctionName(arg1type arg1name, arg2type arg2name ...)
+     {
+         declarations
+         statements
+     }
+A function definition specifies what the function does, and can occur in a few different places. Functions can be defined after the main function, as long as a function prototype has first been declared. The prototype contains the name, return type and arguments, but not the body of the function. Here, the term declaration is used for function prototypes that declare that the function exists. The term definition is used where the body of the function is actually specified. Normally, a .c file has a companion .h file that contains all the function prototypes. With the AVRlib, we normally use a number of .c files (e.g. timer.c or a2d.c) that contain function definitions. The .c files are compiled together with the .c file you write, and are specified in the makefile (see below). But, in order to use functions from those .c files, you first need to declare their prototypes. This is done by including the corresponding .h file (e.g. timer.h or a2d.h). Look in a .h file in the AVRlib to see what it looks like. Functions can also be defined before the main function, but this is generally considered bad style.
+
+After a function is declared, it can be "called" or used, as long as its definition exists. If the function does not return a value, its return type is declared as void. void is also used if there are no arguments. The example program in the first section contains such a function:
+
+     void checkButton(void) {
+        ...
+     }
+The code inside the function is executed when it is "called" from the another function:
+
+     checkButton();
+If the function returns a value, the keyword return must be present in the function, followed by the value to be returned. Once return is reached, the function exits and evaluates to the return value. If a function has arguments, they are normally passed as a value in parentheses after the function name in the function call. Inside the function, the arguments act like variables that have the value that has been passed. Take the following program for example:
+
+     u16 timesten(u16 foo);  // function prototype
+     int main(void) {
+          u16 bar;           // declare an unsigned 16-bit variable 
+          bar = timesten(9); // call the function timesten with the argument 9, store the result in bar
+          ...
+      }
+          
+      u16 timesten(u16 foo) { //define the function timesten, takes 1 argument
+           return (foo * 10); //return the argument multiplied by 10
+      }
+Here the variable bar will end up with the value 90.
+
+You'll notice that the main function normally has a return type int, and returns a value of 0. This is mainly used as a convention for our purposes. A return value of zero typically indicates that a program has exited normally, and other numbers are used to specify different errors. The main function does not require a prototype.
+
+Scope
+Scope refers to the region of a program in which a named entity can be used. In the previous example, the variable bar cannot be used inside the definition of timesten. Similarly, the argument named foo has no meaning inside the main function. For variables and arguments defined within a function, their scope lasts only until the end of the function. A special type of variable called a global variable is defined before the main function, and can be used inside any function defined after the global variable is declared. In other contexts, global variables are often frowned upon, but in microcontroller programming they can be useful. A distinction is often made between local scope, which applies to the current function and global scope which applies to all functions. In the case of a local and global variable with the same name, the locally-defined one is used. It is best to avoid using the same names for variables even if they have different scope to avoid confusion.
+When program execution exits a function, the memory assigned to the variables that are local to that function is freed for use by other parts of the program. This means that the values of the local variables will not be the same the next time the function is called. In cases where you want the values of variables to persist between function calls, the static declaration is used before the variable type in the variable definition. In the example in the first section, the debounce counter buttonDownCounter is used to as a counter whose value needs to be maintained across function calls, and is therefore declared to be static.
+     void checkButton(void) {
+        static u16 buttonDownCounter;
+        ...
+        
+     }
+
+*AVR-Specific Commands
+
+Types
+It is very important to keep track of how big your variables are. The following are defined in inttypes.h, part of the avr-libc. When used in your program, they are created in RAM.
+
+Data Type	Length (bits/bytes)	Values
+Uint8_t	8 / 1	0 to 255
+Int8_t	8 / 1	-128 to 127
+Uint16_t	16 / 2	0 to 65535
+Int16_t	16 / 2	-32768 to 32767
+Uint32_t	32 / 4	0 to 4294967295
+Int32_t	32 / 4	-2147483648 to 2147483647
+Uint64_t	64 / 8	0 to 1.8*1019
+Int64_t	64 / 8	-9.2*1018 to 9.2*1018
+
+There is another set of data types defined in the avrlib in global.h, that are sometimes easier to use. You will find them more commonly in our demo programs.
+
+Data Type	Length (bits/bytes)	Values
+u08	8 / 1	0 to 255
+s08	8 / 1	-128 to 127
+u16	16 / 2	0 to 65535
+s16	16 / 2	-32768 to 32767
+u32	32 / 4	0 to 4294967295
+s32	32 / 4	-2147483648 to 2147483647
+u64	64 / 8	0 to 1.8*1019
+s64	64 / 8	-9.2*1018 to 9.2*1018
+Setting and Clearing Bits
+Remember that setting a bit is setting it high or to 1, and clearing a bit is making it low or 0.
+sbi - set a bit.
+           void sbi(u08 register, u08 bit)
+Sets a bit in a register. For example, to set the 0th bit of Port D, you can use:
+
+           sbi(PORTD,0);
+or
+
+           sbi(PORTD,PD0);
+or
+
+           sbi(PORTD,PIND0);
+cbi - clear a bit.
+          void cbi(u08 register, u08 bit)
+Clears a bit in a register. For example, to clear the 2nd bit of Port B, you can use:
+
+           cbi(PORTB,2);
+Writing to and Reading from registers
+The easiest way to write a byte to a register is with an assignment. To write the byte 0x0F (0000 1111 in binary) to the PORTD register:
+           PORTD = 0x0F;
+Direct assignment to registers is a recent addition to AVR C syntax. Previously, the outb function was used:
+           void outb(u08 port, u08 val)
+           
+writes the byte val to a port. To write the byte 0x0F to the PORTD register, you would do the following:
+
+           outb(PORTD,0x0F);
+          
+To read a byte from a register, you can also use an assignment.
+          u08 status;
+          status = PIND;
+would read the value of the PIND register and store it in the variable status.
+
+Similar to outb, the function u08 inb(u08 port) returns the value of the register port.
+          status = inb(PIND);
+is equivalent to the previous statement.
+
+*AVR Registers
+
+All information in the microcontroller, from the program memory, the timer information, to the state on any of input or output pins, is stored in registers. Registers are like shelves in the bookshelf of processor memory. In an 8-bit processor, like the AVR ATMega 16 we are using, the shelf can hold 8 books, where each book is a one bit binary number, a 0 or 1. Each shelf has an address in memory, so that the controller knows where to find it.
+The 32 IO pins of the ATMega32 are divided into 4 ports, A, B, C, and D. Each port has 3 associated registers. For example, for port D, these registers are referred to in C-language by PORTD, PIND, and DDRD. For port B, these would be PORTB, PINB, and DDRB, etc. In C-language, PORTD is really a macro, which refers to a number that is the address of the register in the AVR, but it is much easier to remember PORTD than some arbitray hexadecimal number.
+The DDRx Register
+DDR stands for Data Direction Register. There is one DDR register for each Data Input Port, and they are named for the port they control: DDRA, DDRB, DDRC, DDRD.
+The DDRD register sets the direction of Port D. Each bit of the DDRD register sets the corresponding Port D pin to be either an input or an output. A 1 makes the corresponding pin an output, and a 0 makes the corresponding pin an input. To set the first pin of Port D to be an output pin, you could use the sbi(reg,bit) function, which sets a bit (makes it high or binary 1) in a register:
+     sbi(DDRD, 0);   //these two statements are equivalent
+     sbi(DDRD, PD0); //both set the first pin of port D to be an input
+                     //by setting the 0 bit of the DDRD register.
+To set the second pin to be an input, you could use the cbi(reg,bit) function which clears a bit (makes it low or binary 0) in a register:
+     cbi(DDRD, 1);   //these two statements are equivalent
+     cbi(DDRD, PD1); //both set the second pin of port D to be an output
+                     //by setting the 1 bit of the DDRD register.
+Note that in C, the bit indexing begins with 0. The bits in a register go from 0 to 7. This may be a source of confusion, because when we talk about the "first pin" or "pin 1" of a port, we are referring to the 0 bit or P0 in C. The AVRmini boards label the first pin as pin 1.
+You can also set the value of all the bits in the DDRx register (or any register) using the outb(reg,byte) command. It writes a byte (8 bits) to a register. For example, if you wanted to set pins 1-4 of port B to output and pins 5-8 to input, you could use:
+     outb(DDRB, 0x0F); //Set the low 4 pins of Port B to output
+                       //and the high 4 pins to input
+An alternate way to write a value to a register is using the same syntax as a C assignment:
+     DDRB = 0x0F; //Set the low 4 pins of Port B to output
+     	           //and the high 4 pins to input
+The PORTx Register
+The PORTx register functions differently depending on whether a pin is set to input or output. The simpler case is if a pin is set to output. Then, the PORTC register, for example, controls the value at the physical IO pins on Port C. For example, we can set all the port C pins to output and then make 4 of them high (binary 1) and 4 of them low (binary 0):
+     DDRC = 0xFF;  //Set all Port C pins to output
+     PORTC = 0xF0; //Set first 4 pins of Port C low and next 4 pins high
+When a pin is set to be an input, PORTx register DOES NOT contain the logic values applied to the pins. We use the PINx register for that. If a pin is an input, a 1 in the PORTx register sets a pull-up resistor. This means that if no other circuitry is connected to this physical pin that the voltage on this pin will be Vcc; that is, by default, this pin is set high. This is helpful for a variety of circuits.
+     DDRC = 0x00; //Set all Port C pins to input
+     PORTC = 0xFF; //Set pull-up resistors on Port C
+The PINx Register
+When a pin is set to input, the PINx register contains the value applied to the pin. The pins have an electrical threshold of around 2.5 volts. If a voltage above this level is applied to an input pin, the corresponding bit of the PINx register will be a 1. Below this voltage, the bit will be a zero. See the ATMega16 schematic for the specific threshold voltages. To read the value of an input port, you can use the inb(reg) function or a direct assignment. It returns an 8-bit number that is the value of the 8 bits in the specified register.
+     u08 foo;  // declare an 8-bit variable
+     DDRD = 0x00;   // set port D pins to input
+     PORTD = 0xFF;  // set pull-ups on port D
+     foo = PIND;    // read the value of the port D pins
+                    // and store in the variable foo
+There is also a function available for checking the state of an individual bit, without reading the entire PINx register. The function bit_is_set(reg,bit) returns a 1 if the given bit in the given register is set, and a 0 if the bit is cleared.
+     u08 bar;  // declare an 8-bit variable
+     DDRD = 0x00;    // set port D pins to input
+     PORTD = 0xFF;   // set pull-ups on port D
+     bar = bit_is_set(PIND,1);
+                     // bar now contains the logic value at Port D pin 2
+
+Other Registers:
+
+There are many other registers in the AVR. They can be accessed using the same functions above. Many, such as the timers and A/D converters have associated high-level functions in the AVRlib that make accessing the registers unnecessary. There are also a few 16-bit registers that may be encountered. For these, the functions outw(reg,word) and inw(reg) replace their byte-wise counterparts.
+
+AVRLib
+The AVRLib is essentially a collection of functions and macros that make accessing the functionality of the AVR microprocessor easier and more intuitive. The functions tend to have intuitive names, and follow a naming convention of filenameActionToPerform(), where filename is the descriptive name, beginning with a lowercase letter of the .c and .h file in which the function is contained (e.g. timer for timer functions or a2d for analog-to-digital conversion functions). The ActionToPerform() portion of the name normally describes what the function does. Most AVRLib files have an initialization function which must be called before the other functions for that file can be used, for example timerInit(), uartInit() and midiInit().
+
+rprintf
+rprintf is an AVRLib module that we will use often. It is used for printing strings of characters, usually to an LCD display or over a serial cable connection to a terminal. It was designed to function like the printf function commonly used in other C environments.
+
+The easiest way to use rprintf is to simply give it a string in quotes:
+     rprintf("Hello");
+In order for this action to have any effect, the rprintf system must first have been initialized by calling rprintfInit(location), where location is one of a set of pre-defined functions for specifying where to print to:
+
+     rprintfInit(lcdDataWrite);   // initialize rprintf to print to the LCD
+A "string" is really an array of characters. Characters have the type char, and are 8-bit numbers that use the standard ASCII encoding where each number specifies a character. You can assign a character in single quotes to a char variable, and it will evaluate to its ASCII code. The following chunk of code from lcdtest.c defines an array of characters 41 elements long, then in a for loop sets the first 40 elements to be sequential ASCII characters beginning with 'A'. Finally it sets the last element of the array to '$\backslash$0'. '$\backslash$0' is known as the "null character", and must terminate or be the last element of a string in RAM to be printed correctly. The function rprintfStr(stringinRAM) then prints a null-terminated character array from RAM.
+     #define MAXCOL 40
+     int main(void) {
+       
+       char str2[MAXCOL+1];
+       // Allocate RAM for a test String
+       // but don't initialize the string.
+         rprintfInit(lcdDataWrite);   // initialize rprintf to print to the LCD
+         
+       // Store Characters in the test string in RAM
+       for (i=0; i<MAXCOL; i++) {
+         str2[i] = ('A' + i);
+       }
+      str2[MAXCOL] = '\0';     //RAM String must be NULL terminated
+      rprintfStr(str2);	  //print a string from RAM
+     }
+rprintf can also print numbers in a variety of ways. The %d special character can be inserted into a string, where it acts as a placeholder for a decimal number. In this case, rprintf takes 2 arguments, the string and then the number to replace %d. rprintf takes as many additional arguments as there are %d characters in the string.
+      u08 k;
+        ...
+      rprintf("This is the number one: %d", 1);   // print a decimal number
+      k=2;
+      rprintf("These are two other numbers: %d %d", k, 4);   // print a decimal number from a variable
+Similar to %d, %x lets you print hexadecimal numbers and %c lets you print characters.
+
+rprintfNum lets you print numbers with a variety of options:
+     // print a formatted decimal number
+     // - use base 10
+     // - use 8 characters
+     // - the number is signed [TRUE]
+     // - pad with '.' periods
+     rprintfNum(10, 8, TRUE, '.', 1234);
+output will be
+
+     +...1234
+There are a number of other rprintf functions and options. See lcdtest and vt100test avrlib-demos for examples.
+Program Memory Directives
+The AVR microcontrollers generally have a lot more FLASH memory for storing programs than they have RAM for storing data when the programs are running. Strings can quickly use up a lot of memory, therefore if you are using a lot of strings that do not need to change during the course of program execution, it makes sense to store them in program memory, and not in RAM. Several functions are available for this. One of the simplest to use is rprintfProgStrM():
+
+    rprintfProgStrM("Hello!");  // print a string that is automatically stored in program memory
+Similarly, a string can be explicitly stored in program memory, and printed using rprintfProgStr() as follows:
+     static char PROGMEM str1[] = "This is a test.";
+        ...
+     rprintfProgStr(str1);
+The static declaration is necessary when a string is to be stored in program memory. PROGMEM is a macro inserted between the variable type and name that defines the variable in program memory. This way of defining a string in program memory would be useful when the same string is used in several places in the program. If the string is only used once, rprintfProgStrM() would probably be easier.
+
+Makefiles:
+
+
+A makefile is a file with a specific formatting that is understood by a program called "make". Like .pdf files are understood by "Adobe Acrobat" and .doc files by "Microsoft Word", makefiles are understood by "make", but they don't have a specific suffix. If you type make in a Linux terminal, the make program is executed, and it looks for a file named "makefile" in the current directory. You can alternately specify a makefile, but we won't do that.
+Our makefiles basically consist of lists of variable definitions and rules. Rules specify a "target", a set of "prerequisites" and then a series of commands for getting to the target. The commands are calls to other programs. The main program executed by our makefiles is the C compiler for AVR avr-gcc. This is the program that takes our C code generates the .hex code that is copied onto the microcontroller to be executed. In a very general sense, the makefile says "We want to a .hex file. We have some C files and here are the commands that need to be executed to generate the .hex file". Because the compiler is quite complicated, it is easier to use a makefile to specify a lot of options than to type them at the terminal every time you need to compile a program. The variables in the makefile define certain options or file locations to the compiler that need to be specified. These often don't change from one program to another, so we can copy a makefile from another project and change only the bits we need to. This is how EVERYONE uses makefiles. NOBODY WRITES MAKEFILES FROM SCRATCH. Well, not nobody. But almost nobody.
+Definitions in the makefile follow a simple form: VARIABLE = something. For example, the first line of our makefiles (other than comments which begin with a #) is:
+     MCU = atmega32
+This specifies which microcontroller we are using to the compiler. The variable MCU is then used when the compiler is invoked, and will be replaced by atmega32, just like a macro substitution or #define in C. This way, if we want to change the AVR microcontroller we are using, we only need to specify it here. Variables can be defined in terms of other variables using $(). In our makefiles you might see:
+
+     TRG = fourbutton
+        ...
+        ...
+     SRC = $(TRG).c
+     #Now, SRC = fourbutton.c
+The heart of our makefile, where the compiler is invoked requires so few changes from one project to another that it is actually located in the AVRLib and simply included in each the project's makefile using:
+     include $(AVRLIB)/make/avrccrma_make
+Where $(AVRLIB) has been defined as the path to your copy of the AVRLib. You can use a makefile in one of the demo projects to find the path to it and look at it if you want.
+
+There are only 2 parts of a makefile that you will likely need to change. The first has already been shown - the name of your C file. For a new project with a .c file called myproj.c, you need to have the following line in your makefile:
+     TRG = myproj
+The other part of the makefile to change is the list of sources that are used. In the makefile for demo5, you will see the line:
+
+     SRC = $(AVRLIB)/timer.c $(AVRLIB)/rprintf.c $(AVRLIB)/lcd.c $(TRG).c
+This line specifies all the .c files that are used by your program. $(TRG).c is your .c file, and the others are in the AVRLib. If you use a2d functions and included a2d.h in your .c file, you would need to add $(AVRLIB)/a2d.c to this line.
+
+When you type "make" at a command line, you can specify a target. This specifies a label in a rule that you want to generate. The default target is "all". Our makefile basically contains a rule that says:
+     all:    $(TRG).hex
+This means that in order to satisfy the target "all", you need to have a .hex file. This is known as a dependency. In other words, "all" depends on $(TRG).hex. There are then other rules that specify how to generate the .hex file by invoking the compiler.
+
+We have a special target in our makefile called "load". To satisfy this target, make calls a program called "avrdude" (with a bunch of options that are defined as variables) that copies the .hex code over the serial cable onto the microcontroller. As you probably guessed, the "load" target depends on $(TRG).hex.
