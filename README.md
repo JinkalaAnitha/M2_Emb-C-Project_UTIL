@@ -75,6 +75,37 @@ These Wires made the pysical connection among sevaral components that are used i
 |5_Report|Decumentation specifying  report on project|
 |6_Images and Videos|The documents require the images and videos|
 # SDLC Activity
+[![Code Quality Score](https://api.codiga.io/project/32892/score/svg)
+
+[![Code Grade](https://api.codiga.io/project/32892/status/svg)
+
+[![Build](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build.yml)
+
+[![Build Linux](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build%20Linux.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build%20Linux.yml)
+
+[![Build Windows](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build%20Windows.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build%20Windows.yml)
+
+[![CD](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/CD.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/CD.yml)
+
+[![CI](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/CI.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/CI.yml)
+
+[![CPPCHECK](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/CPPCHECK.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/CPPCHECK.yml)
+
+[![CodeQuality](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/CodeQuality.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/CodeQuality.yml)
+
+[![Compile](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Compile.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Compile.yml)
+
+[![CppCheck](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/CppCheck.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/CppCheck.yml)
+
+[![Dynamic](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Dynamic.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Dynamic.yml)
+
+[![Static](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Static.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Static.yml)
+
+[![Valgrind](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Valgrind.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Valgrind.yml)
+
+[![Main](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Main.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Main.yml)
+
+[![Contribution Check-Git Inspector](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Contribution%20Check-Git%20Inspector.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Contribution%20Check-Git%20Inspector.yml)
 
 
 
