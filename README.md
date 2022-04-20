@@ -34,3 +34,49 @@ The following are the major specifications to built Smart Door Lock System.
   * SimulIDE
 * Embedded C Language
 # Details of Components
+## ATmega328 Micro-Controller
+ATmega328 is an 8-bit, 28-Pin AVR Microcontroller, manufactured by Microchip, follows RISC Architecture and has a flash-type program memory of 32KB.Atmega328 is the microcontroller, used in basic Arduino boards i.e Arduino UNO, Arduino Pro Mini and Arduino Nano.
+* It has 8 Pins for ADC operations, which all combine to form PortA ( PA0 – PA7 ).
+* It also has 3 built-in Timers, two of them are 8 Bit timers while the third one is 16-Bit Timer.
+* It operates ranging from 3.3V to 5.5V but normally we use 5V as a standard.
+* Its excellent features include cost-efficiency, low power dissipation, programming lock for security purposes, real timer counter with separate oscillator.
+* It’s normally used in Embedded Systems applications. You should have a look at these Real Life Examples of Embedded Systems, we can design all of them using this Microcontroller.
+## I2C LCD Display
+I2C_LCD is an easy-to-use display module, It can make display easier. Using it can reduce the difficulty of make, so that makers can focus on the core of the work.It consumes only two I/O pins that are not even part of a set of digital I/O pins and can also be shared with other I2C devices.
+## LED
+The LED Stands for Light Emitting Diode.LED is a semiconductor device used in many electronic devices, mostly used for indication purposes. It is used widely as indicator during test for checking the validity of results at different stages.It is very cheap and easily available in variety of shape, color and size. The LEDs are also used in designing of message display boards and traffic control signal lights etc.
+## 12V Adapter
+A twelve-volt battery has six single cells in series producing a fully charged output voltage of 12.6 volts. A battery cell consists of two lead plates a positive plate covered with a paste of lead dioxide and a negative made of sponge lead, with an insulating material (separator) in between.
+## Bread Board
+A breadboard is used to build and test circuits quickly before finalizing any circuit design. The breadboard has many holes into which circuit components like ICs and resistors can be inserted.
+The bread board has strips of metal which run underneath the board and connect the holes on the top of the board. The metal strips are laid out as shown below. Note that the top and bottom rows of holes are connected horizontally while the remaining holes are connected vertically.
+## LM2596 Module
+The LM2596 series of regulators are monolithic integrated circuits that provide all the active functions
+for a step-down (buck) switching regulator, capable of driving a 3-A load with excellent line and load
+regulation. These devices are available in fixed output voltages of 3.3 V, 5 V, 12 V, and an adjustable output
+version.Requiring a minimum number of external components, these regulators are simple to use and include internal frequency compensation, and a fixed frequency oscillator.The LM2596 series operates at a switching frequency
+of 150 kHz, thus allowing smaller sized filter components than what would be required with lower frequency switching regulators.
+## RFID Reader and Tags
+Radio Frequency Identification (RFID) is a technology that uses radio waves to passively identify a tagged object.
+## 1-Channel Relay Module
+The Single Channel Relay Module is a convenient board which can be used to control high voltage, high current load such as motor, solenoid valves, lamps and AC load. It is designed to interface with microcontroller such as Arduino, PIC and etc.
+## Push Button
+ A Push Button switch is a type of switch which consists of a simple electric mechanism or air switch mechanism to turn something on or off.
+## Jumper Wires
+These Wires made the pysical connection among sevaral components that are used in this project.
+# Folder Structure
+|Folder  |Description  |
+|--------|-------------|
+|0_Abstract|Aim and Goal of the project|
+|1_Requirements|Documents Specifying the detailed components to build this project|
+|2_Architecture|This Folder having documents and they specify architecure and control flow and design flow|
+|3_Implementation|Documentes requires src files and souce code,Doxygen and Makefile|
+|4_TestPlan and Output|Douments with test plans and procedures|
+|5_Report|Decumentation specifying  report on project|
+|6_Images and Videos|The documents require the images and videos|
+# SDLC Activity
+
+
+
+
+
