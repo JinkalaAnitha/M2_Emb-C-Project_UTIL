@@ -79,6 +79,7 @@ These Wires made the pysical connection among sevaral components that are used i
 
 [![Code Grade](https://api.codiga.io/project/32892/status/svg)
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/abbd9cb7285c49fc8574bc002c00fbc9)](https://app.codacy.com/gh/JinkalaAnitha/M2_Embedded-Project-C_UTIL?utm_source=github.com&utm_medium=referral&utm_content=JinkalaAnitha/M2_Embedded-Project-C_UTIL&utm_campaign=Badge_Grade_Settings)
 [![Build](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build.yml)
 
 [![Build Linux](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build%20Linux.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build%20Linux.yml)
