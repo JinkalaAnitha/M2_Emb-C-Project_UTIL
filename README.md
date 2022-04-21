@@ -79,6 +79,8 @@ These Wires made the pysical connection among sevaral components that are used i
 
 [![Code Grade](https://api.codiga.io/project/32892/status/svg)
 
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/b1e2095cc3df45a1afa98594f15db5b8)](https://www.codacy.com/gh/JinkalaAnitha/M2_Embedded-Project-C_UTIL/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=JinkalaAnitha/M2_Embedded-Project-C_UTIL&amp;utm_campaign=Badge_Grade)
+
 [![Build](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build.yml)
 
 [![Build Linux](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build%20Linux.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Build%20Linux.yml)
@@ -106,6 +108,10 @@ These Wires made the pysical connection among sevaral components that are used i
 [![Main](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Main.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Main.yml)
 
 [![Contribution Check-Git Inspector](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Contribution%20Check-Git%20Inspector.yml/badge.svg)](https://github.com/JinkalaAnitha/M2_Embedded-Project-C_UTIL/actions/workflows/Contribution%20Check-Git%20Inspector.yml)
+
+
+![Codiga-Code Quality](https://user-images.githubusercontent.com/101356849/164369485-4079a9a1-b185-4be3-b39f-fed4826b05a5.jpg)
+
 
 
 
