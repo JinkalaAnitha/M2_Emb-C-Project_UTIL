@@ -154,7 +154,7 @@ The SWOT Analysis is given by
 |  ID  |  Description  |
 |  ------  |  ------  |
 |  LLR1  |  Battery Backup  |
-|  LLR2  |  Time Format Adjustment  |
+|  LLR2  |  Maximum RFID Tags  |
 |  LLR3  |  Temperature Adjustment  |
 
 # Output 
